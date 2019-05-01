@@ -1,14 +1,13 @@
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
+import com.github.BambooTuna.CryptoLib.restAPI.liquid.Protocol.{SimpleOrderBody, SimpleOrderResponse}
 import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPIs
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.{SimpleOrderBody, SimpleOrderResponse}
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity}
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import scala.concurrent.ExecutionContextExecutor
 
-import com.github.BambooTuna.CryptoLib.restAPI.model.CirceSupport._
+//この行は必須
 import io.circe.generic.auto._
-
 
 object Main {
   implicit val system: ActorSystem                        = ActorSystem()
@@ -16,7 +15,7 @@ object Main {
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
   def main(args: Array[String]): Unit = {
-    val i = new RestAPIs(ApiKey("aaa", "bbb"))
+    val i = new RestAPIs(ApiKey("key", "secret"))
 
     val orderData = SimpleOrderBody(
       order_type = "limit",
@@ -26,6 +25,6 @@ object Main {
       price = "540000"
     )
 
-    i.simpleOrder.run[SimpleOrderResponse](Some(Entity(orderData))).map(println)
+    i.simpleOrder.run[SimpleOrderBody, SimpleOrderResponse](Some(Entity(orderData))).map(println)
   }
 }
