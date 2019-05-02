@@ -1,35 +1,34 @@
 package com.github.BambooTuna.CryptoLib.restAPI.useCase
 
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
+import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
-import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshal}
+import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.{ErrorResponseJson, HttpRequestElement, ResponseJson}
-import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity}
+
+import scala.concurrent.{ExecutionContextExecutor, Future}
+import io.circe._
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
+trait RestAPISupport[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] extends GenerateHttpRequest[I, P, O] {
 
-trait RestAPISupport extends GenerateHttpRequest {
-  val apiKey: ApiKey
+  implicit val apiKey: ApiKey
 
-  protected def doRequest[A <: ResponseJson](httpRequest: HttpRequest)(implicit unmarshaller: FromEntityUnmarshaller[A], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, A]] = {
+  protected def doRequest(httpRequest: HttpRequest)(implicit decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
     for {
       httpResponse <- Http().singleRequest(httpRequest)
       bodyString <- Unmarshal(httpResponse.entity).to[String]
       r <- httpResponse.status match {
-        case StatusCodes.OK =>
-          Unmarshal(httpResponse.entity).to[A].map(Right(_)).recoverWith{
-            case _ => Future.successful(Left(ErrorResponseJson(StatusCodes.OK, bodyString)))
-          }
+        case StatusCodes.OK => parser.decode[O](bodyString).fold(_ => Future.successful(Left(ErrorResponseJson(StatusCodes.OK, bodyString))), o => Future.successful(Right(o)))
         case s => Future.successful(Left(ErrorResponseJson(s, bodyString)))
       }
     } yield r
   }
 
-  protected def createSign(apiKey: ApiKey, entity: Option[Entity], queryString: Option[String])(implicit httpRequestElement: HttpRequestElement): String
+  protected def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String
 
   protected def HMACSHA256(text: String, sharedSecret: String): String = {
     val algorithm = "HMacSha256"

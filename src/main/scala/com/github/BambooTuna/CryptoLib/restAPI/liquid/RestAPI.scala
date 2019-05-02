@@ -2,41 +2,41 @@ package com.github.BambooTuna.CryptoLib.restAPI.liquid
 
 import com.github.BambooTuna.CryptoLib.restAPI.model._
 import com.github.BambooTuna.CryptoLib.restAPI.useCase.RestAPISupport
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.{HttpRequestElement, ResponseJson}
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.{HttpRequest, ResponseEntity}
-import akka.http.scaladsl.unmarshalling.FromEntityUnmarshaller
+import akka.http.scaladsl.model.HttpRequest
 import akka.stream.ActorMaterializer
-import pdi.jwt.{JwtAlgorithm, JwtCirce}
-import io.circe.syntax._
-import io.circe.generic.auto._
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
+import io.circe._
+import io.circe.syntax._
+import io.circe.generic.auto._
+import pdi.jwt.{JwtAlgorithm, JwtCirce}
 
-class RestAPI(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends RestAPISupport {
+trait RestAPI[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] extends RestAPISupport[I, P, O] {
 
-
-  override def run[O <: ResponseJson](entity: Option[Entity], queryString: Option[String])(implicit unmarshaller: FromEntityUnmarshaller[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[Protocol.ErrorResponseJson, O]] = {
-    doRequest[O](send(entity, queryString))
+  override def run(entity: Option[Entity[I]], queryParameters: Option[QueryParameters[P]])(implicit encodeI: Encoder[I], encodeP: Encoder[P], decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
+    doRequest(send(entity, queryParameters))
   }
 
-
-  override def send(entity: Option[Entity], queryString: Option[String]): HttpRequest = {
-    getHttpRequest(entity, queryString, Header(createHeaderMap(apiKey, entity, queryString)))
+  override def send(entity: Option[Entity[I]], queryParameters: Option[QueryParameters[P]])(implicit encodeI: Encoder[I], encodeP: Encoder[P]): HttpRequest = {
+    implicit val entityString = entity.map(_.convertToString).getOrElse("")
+    implicit val queryParametersMap = queryParameters.map(_.getMap).getOrElse(Map.empty)
+    getHttpRequest(Header(createHeaderMap))
   }
 
-  private def createHeaderMap(apiKey: ApiKey, entity: Option[Entity], queryString: Option[String]): Map[String, String] = {
+  private def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
     Map(
       "X-Quoine-API-Version" -> "2",
-      "X-Quoine-Auth" -> createSign(apiKey, entity, queryString)(httpRequestElement),
+      "X-Quoine-Auth" -> createSign,
       "Content-Type" -> "application/json"
     )
   }
 
-  override protected def createSign(apiKey: ApiKey, entity: Option[Entity], queryString: Option[String])(implicit httpRequestElement: HttpRequestElement): String = {
+  override def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String = {
     case class AuthParameters(path: String, nonce: Long = System.currentTimeMillis, token_id: String)
     val text = AuthParameters(
-      path = httpRequestElement.path + queryString.map("?" + _).getOrElse(""),
+      path = httpRequestElement.path.addQueryParameters(queryParametersMap),
       token_id = apiKey.key
     ).asJson.noSpaces
     HMACSHA256(text, apiKey.secret)
