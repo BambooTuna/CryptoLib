@@ -1,25 +1,23 @@
 package com.github.BambooTuna.CryptoLib.restAPI.useCase
 
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.{ErrorResponseJson, HttpRequestElement, RequestJson, ResponseJson}
-import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity}
-
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
+import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
+
 import scala.concurrent.{ExecutionContextExecutor, Future}
-
 import io.circe._
-
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-trait RestAPISupport extends GenerateHttpRequest {
+trait RestAPISupport[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] extends GenerateHttpRequest[I, P, O] {
 
-  val apiKey: ApiKey
+  implicit val apiKey: ApiKey
 
-  protected def doRequest[O <: ResponseJson](httpRequest: HttpRequest)(implicit decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
+  protected def doRequest(httpRequest: HttpRequest)(implicit decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
     for {
       httpResponse <- Http().singleRequest(httpRequest)
       bodyString <- Unmarshal(httpResponse.entity).to[String]
@@ -30,7 +28,7 @@ trait RestAPISupport extends GenerateHttpRequest {
     } yield r
   }
 
-  protected def createSign[I <: RequestJson](apiKey: ApiKey, entity: Option[Entity[I]], queryString: Option[String])(implicit httpRequestElement: HttpRequestElement): String
+  protected def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String
 
   protected def HMACSHA256(text: String, sharedSecret: String): String = {
     val algorithm = "HMacSha256"

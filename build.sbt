@@ -17,12 +17,11 @@ lazy val sample = (project in file("sample"))
   )
   .dependsOn(root)
 
-
 lazy val root = (project in file("."))
   .settings(commonSettings)
   .settings(
     name := "CryptoLib",
-    version := "1.0.2-SNAPSHOT",
+    version := "1.0.3-SNAPSHOT",
     libraryDependencies ++= Seq(
       Circe.core,
       Circe.generic,
