@@ -1,10 +1,10 @@
 import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPIs
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity, QueryParameters}
 import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList._
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
-
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
+import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList.EnumDefinition._
+
 import scala.concurrent.ExecutionContextExecutor
 
 //この行は必須
@@ -19,9 +19,9 @@ object Main {
     val i = new RestAPIs(ApiKey("key", "secret"))
 
     val orderData = SimpleOrderBody(
-      order_type = "limit",
+      order_type = OrderType.Limit,
       product_id = 5,//BTC　レバ取引
-      side = "buy",
+      side = Side.Buy,
       quantity = "0.01",
       price = "540000"
     )

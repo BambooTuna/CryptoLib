@@ -1,5 +1,6 @@
 package com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList
 
+import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList.EnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
