@@ -1,26 +1,27 @@
-package com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList
+package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPI
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-class CancelOrder(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends RestAPI[EmptyEntityRequestJson, CancelOrderQueryParametersRequest, CancelOrderResponse]
+class CancelOrder(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends LiquidRestAPI[EmptyEntityRequestJson, CancelOrderQueryParametersRequest, CancelOrderResponse]
 
 case class CancelOrderQueryParametersRequest(
                                             id: String
                                             ) extends EmptyQueryParametersJson
 case class CancelOrderResponse(
                                 id: Long,
-                                order_type: String,
+                                order_type: OrderType,
                                 quantity: BigDecimal,
                                 disc_quantity: BigDecimal,
                                 iceberg_total_quantity: BigDecimal,
-                                side: String,
+                                side: Side,
                                 filled_quantity: BigDecimal,
                                 price: BigDecimal,
                                 created_at: Long,
                                 updated_at: Long,
-                                status: String,
+                                status: OrderStatus,
                                 leverage_level: Int,
                                 source_exchange: String,
                                 product_id: Int,

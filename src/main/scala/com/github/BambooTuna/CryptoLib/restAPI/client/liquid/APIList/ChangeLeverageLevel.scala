@@ -1,11 +1,11 @@
-package com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList
+package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList.EnumDefinition._
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPI
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-class ChangeLeverageLevel(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends RestAPI[ChangeLeverageLevelBody, ChangeLeverageLevelQueryParameters, ChangeLeverageLevelResponse]
+class ChangeLeverageLevel(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends LiquidRestAPI[ChangeLeverageLevelBody, ChangeLeverageLevelQueryParameters, ChangeLeverageLevelResponse]
 case class LeverageLevel(
                           leverage_level: Int
                         )
@@ -26,7 +26,7 @@ case class ChangeLeverageLevelResponse(
                                    margin: BigDecimal,
                                    free_margin: BigDecimal,
                                    trader_id: BigDecimal,
-                                   status: String,
+                                   status: OrderStatus,
                                    product_code: String,
                                    currency_pair_code: String,
                                    position: BigDecimal,
