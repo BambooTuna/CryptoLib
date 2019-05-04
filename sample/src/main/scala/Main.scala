@@ -1,10 +1,12 @@
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.RestAPIs
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity, QueryParameters}
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList._
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPIs
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList._
+import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
+import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.BitflyerRestAPIs
+import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList._
+
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import com.github.BambooTuna.CryptoLib.restAPI.liquid.APIList.EnumDefinition._
-
 import scala.concurrent.ExecutionContextExecutor
 
 //この行は必須
@@ -16,7 +18,20 @@ object Main {
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
   def main(args: Array[String]): Unit = {
-    val i = new RestAPIs(ApiKey("key", "secret"))
+    val b = new BitflyerRestAPIs(ApiKey("key", "secret"))
+    b.simpleOrder.run(
+      entity = Some(
+        Entity(SimpleOrderEntity(
+          product_code = "FX_BTC_JPY",
+          child_order_type = BitflyerEnumDefinition.OrderType.Limit,
+          side = BitflyerEnumDefinition.Side.Buy,
+          price = 480000,
+          size = 1
+        ))
+      )
+    ).map(println)
+
+    val i = new LiquidRestAPIs(ApiKey("key", "secret"))
 
     val orderData = SimpleOrderBody(
       order_type = OrderType.Limit,
