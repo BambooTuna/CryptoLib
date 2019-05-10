@@ -77,7 +77,7 @@ object Shapeless {
 }
 
 object Enumeratum {
-  val version = "com.beachape" %% "enumeratum" % "1.5.12"
+  val version = "com.beachape" %% "enumeratum-circe" % "1.5.21"
 }
 
 object Refined {

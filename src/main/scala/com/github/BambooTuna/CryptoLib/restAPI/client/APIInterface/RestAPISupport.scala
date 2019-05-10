@@ -1,19 +1,19 @@
-package com.github.BambooTuna.CryptoLib.restAPI.useCase
+package com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface
 
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
-import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-
-import scala.concurrent.{ExecutionContextExecutor, Future}
-import io.circe._
+import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.ErrorResponseJson
+import io.circe.{Decoder, parser}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-trait RestAPISupport[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] extends GenerateHttpRequest[I, P, O] {
+import scala.concurrent.{ExecutionContextExecutor, Future}
+
+trait RestAPISupport[I, P, O] extends GenerateHttpRequest[I, P, O] {
 
   implicit val apiKey: ApiKey
 
@@ -27,6 +27,8 @@ trait RestAPISupport[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson,
       }
     } yield r
   }
+
+  protected def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String]
 
   protected def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String
 

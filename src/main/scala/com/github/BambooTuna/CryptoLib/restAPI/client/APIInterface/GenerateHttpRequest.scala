@@ -1,16 +1,16 @@
-package com.github.BambooTuna.CryptoLib.restAPI.useCase
+package com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface
 
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
-import com.github.BambooTuna.CryptoLib.restAPI.model._
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.model._
+import akka.http.scaladsl.model.headers.RawHeader
 import akka.stream.ActorMaterializer
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model._
+import io.circe.{Decoder, Encoder}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
-import io.circe._
 
-trait GenerateHttpRequest[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] {
+trait GenerateHttpRequest[I, P, O] {
 
   implicit protected val httpRequestElement: HttpRequestElement
 
@@ -28,7 +28,9 @@ trait GenerateHttpRequest[I <: EmptyEntityRequestJson, P <: EmptyQueryParameters
   }
 
   private def createUri(endpoint: Endpoint, path: Path)(implicit queryParametersMap: Map[String, String]): Uri = {
-    Uri.from(scheme = endpoint.scheme, host = endpoint.host, path = path.addQueryParameters(queryParametersMap))
+    val p = path.addQueryParameters(queryParametersMap).split("\\?")
+    val queryString = p.applyOrElse[Int, String](1, _ => "")
+    Uri.from(scheme = endpoint.scheme, host = endpoint.host, path = p(0), queryString = if (queryString.isEmpty) None else Some(queryString))
   }
 
   private def createRawHeaderList(header: Header): List[RawHeader] = {

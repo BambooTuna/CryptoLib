@@ -1,18 +1,20 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
+import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
 
-class GetMyOrders(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends LiquidRestAPI[EmptyEntityRequestJson, GetMyOrdersQueryParameters, GetMyOrdersResponse]
+case class GetMyOrdersImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyOrdersBodyImpl, GetMyOrdersQueryParametersImpl, GetMyOrdersResponseImpl]
+case class GetMyOrdersBodyImpl() extends GetMyOrdersBody
+case class GetMyOrdersQueryParametersImpl(
+                                           funding_currency: String = "",
+                                           product_id: String = "",
+                                           status: OrderStatus = OrderStatus.Live,
+                                           with_details: String = ""
+                                         ) extends GetMyOrdersQueryParameters
 
-case class GetMyOrdersQueryParameters(
-                                       funding_currency: String = "",
-                                       product_id: String = "",
-                                       status: OrderStatus = OrderStatus.Live,
-                                       with_details: String = ""
-                                     ) extends EmptyQueryParametersJson
 case class MyOrderData(
                         id: Long,
                         order_type: OrderType,
@@ -32,9 +34,9 @@ case class MyOrderData(
                         funding_currency: String,
                         currency_pair_code: String,
                         order_fee: BigDecimal
-                         )
-case class GetMyOrdersResponse(
-                                models: List[MyOrderData],
-                                current_page: Int,
-                                total_pages: Int
-                              ) extends EmptyResponseJson
+                      )
+case class GetMyOrdersResponseImpl(
+                                    models: List[MyOrderData],
+                                    current_page: Int,
+                                    total_pages: Int
+                                  ) extends GetMyOrdersResponse

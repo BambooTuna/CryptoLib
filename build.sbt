@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
   .settings(commonSettings)
   .settings(
     name := "CryptoLib",
-    version := "1.0.3-SNAPSHOT",
+    version := "1.0.6-SNAPSHOT",
     libraryDependencies ++= Seq(
       Circe.core,
       Circe.generic,

@@ -1,16 +1,17 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
+import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
 
-class GetMyPositions(val apiKey: ApiKey, implicit val httpRequestElement: HttpRequestElement) extends LiquidRestAPI[EmptyEntityRequestJson, GetMyPositionsQueryParameters, GetMyPositionsResponse]
-
-case class GetMyPositionsQueryParameters(
-                                          funding_currency: String = "",
-                                          status: PositionStatus = PositionStatus.Empty
-                                        ) extends EmptyQueryParametersJson
+case class GetMyPositionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBodyImpl, GetMyPositionsQueryParametersImpl, GetMyPositionsResponseImpl]
+case class GetMyPositionsBodyImpl() extends GetMyPositionsBody
+case class GetMyPositionsQueryParametersImpl(
+                                              funding_currency: String = "",
+                                              status: PositionStatus = PositionStatus.Empty
+                                            ) extends GetMyPositionsQueryParameters
 
 case class MyPositionData(
                            id: Long,
@@ -37,8 +38,8 @@ case class MyPositionData(
                            updated_at: Long,
                            total_interest: BigDecimal
                          )
-case class GetMyPositionsResponse(
-                                   models: List[MyPositionData],
-                                   current_page: Int,
-                                   total_pages: Int
-                                 ) extends EmptyResponseJson
+case class GetMyPositionsResponseImpl(
+                                       models: List[MyPositionData],
+                                       current_page: Int,
+                                       total_pages: Int
+                                  ) extends GetMyPositionsResponse

@@ -1,17 +1,14 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer
 
 import com.github.BambooTuna.CryptoLib.restAPI.model._
-import com.github.BambooTuna.CryptoLib.restAPI.useCase.RestAPISupport
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpRequest
 import akka.stream.ActorMaterializer
+import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.RestAPISupport
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import io.circe._
-import io.circe.syntax._
-import io.circe.generic.auto._
-import pdi.jwt.{JwtAlgorithm, JwtCirce}
 
 trait BitflyerRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
@@ -25,7 +22,7 @@ trait BitflyerRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
     getHttpRequest(Header(createHeaderMap))
   }
 
-  private def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
+  override def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
     val timestamp = System.currentTimeMillis.toString
     Map(
       "ACCESS-KEY" -> apiKey.key,
