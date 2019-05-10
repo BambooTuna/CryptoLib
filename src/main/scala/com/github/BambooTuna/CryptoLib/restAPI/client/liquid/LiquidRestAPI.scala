@@ -1,4 +1,4 @@
-package com.github.BambooTuna.CryptoLib.restAPI.liquid
+package com.github.BambooTuna.CryptoLib.restAPI.client.liquid
 
 import com.github.BambooTuna.CryptoLib.restAPI.model._
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
@@ -13,7 +13,7 @@ import io.circe.syntax._
 import io.circe.generic.auto._
 import pdi.jwt.{JwtAlgorithm, JwtCirce}
 
-trait RestAPI[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O <: EmptyResponseJson] extends RestAPISupport[I, P, O] {
+trait LiquidRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
   override def run(entity: Option[Entity[I]], queryParameters: Option[QueryParameters[P]])(implicit encodeI: Encoder[I], encodeP: Encoder[P], decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
     doRequest(send(entity, queryParameters))

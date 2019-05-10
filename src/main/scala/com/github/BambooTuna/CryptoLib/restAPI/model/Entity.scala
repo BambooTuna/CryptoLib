@@ -5,7 +5,7 @@ import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.{EmptyEntityReques
 import io.circe._
 import io.circe.syntax._
 
-case class Entity[I <: EmptyEntityRequestJson](requestJson: I = new EmptyEntityRequestJson()) {
+case class Entity[I](requestJson: I = new EmptyEntityRequestJson()) {
 
   def convertToString(implicit encodeI: Encoder[I]): String = {
 

@@ -66,14 +66,52 @@ object Main extends App {
           QueryParameters(AmendOpenOrderQueryParametersImpl(order.map(_.id.toString).getOrElse("1234567890")))
         )
       )
+      leverage <- i.changeLeverageLevel.run(
+        entity = Some(
+          Entity(ChangeLeverageLevelBodyImpl(LeverageLevel(
+            leverage_level = 10
+          )))
+        ),
+        queryParameters = Some(
+          QueryParameters(ChangeLeverageLevelQueryParametersImpl("1234567890"))
+        )
+      )
+      getOrder <- i.getMyOrders.run(
+        queryParameters = Some(
+          QueryParameters(GetMyOrdersQueryParametersImpl(
+            product_id = "5",
+            status = OrderStatus.Live,
+            with_details = "1"
+          ))
+        )
+      )
       cancel <- i.cancelOrder.run(
         queryParameters = Some(
           QueryParameters(CancelOrderQueryParametersImpl(order.map(_.id.toString).getOrElse("1234567890")))
         )
       )
+      position <- i.getMyPositions.run(
+        queryParameters = Some(
+          QueryParameters(GetMyPositionsQueryParametersImpl(
+            status = PositionStatus.Open
+          ))
+        )
+      )
+      closeAll <- i.closeAllOpenPositions.run(
+        queryParameters = Some(
+          QueryParameters(CloseAllOpenPositionsQueryParametersImpl(
+            side = Side.Buy
+          ))
+        )
+      )
     } yield {
-      amend.map(println)
-      cancel.map(println)
+      order.fold(println, println)
+      amend.fold(println, println)
+      leverage.fold(println, println)
+      getOrder.fold(println, println)
+      cancel.fold(println, println)
+      position.fold(println, println)
+      closeAll.fold(println, println)
     }
   }
 }
