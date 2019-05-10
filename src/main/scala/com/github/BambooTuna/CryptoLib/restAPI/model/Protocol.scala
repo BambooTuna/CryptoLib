@@ -1,6 +1,6 @@
 package com.github.BambooTuna.CryptoLib.restAPI.model
 
-import akka.http.scaladsl.model.{HttpMethod, StatusCode}
+import akka.http.scaladsl.model.{HttpMethod, HttpMethods, StatusCode}
 
 object Protocol {
 
@@ -14,5 +14,8 @@ object Protocol {
   case class ErrorResponseJson(statusCode: StatusCode, bodyString: String) extends EmptyResponseJson
 
   case class HttpRequestElement(endpoint: Endpoint, method: HttpMethod, path: Path)
+  object HttpRequestElement {
+    def empty() = HttpRequestElement(Endpoint("", ""), HttpMethods.POST, Path(""))
+  }
 
 }

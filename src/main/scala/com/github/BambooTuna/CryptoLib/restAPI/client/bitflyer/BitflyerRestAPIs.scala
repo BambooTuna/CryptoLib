@@ -2,18 +2,18 @@ package com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer
 
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Endpoint, Path}
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
-import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList.SimpleOrder
+import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList._
 import akka.http.scaladsl.model.HttpMethods
+import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.RestAPIs
 
-
-class BitflyerRestAPIs(val apiKey: ApiKey) {
+class BitflyerRestAPIs(val apiKey: ApiKey) extends RestAPIs {
 
   val endpoint = Endpoint(
     scheme = "https",
     host = "api.bitflyer.com"
   )
 
-  val simpleOrder = new SimpleOrder(
+  override val simpleOrder = SimpleOrderImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
