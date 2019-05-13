@@ -21,4 +21,13 @@ class BitflyerRestAPIs(val apiKey: ApiKey) extends RestAPIs {
       path = Path("/v1/me/sendchildorder")
     )
   )
+
+  override val getExecutions = GetExecutionsImpl(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/v1/me/getexecutions")
+    )
+  )
 }

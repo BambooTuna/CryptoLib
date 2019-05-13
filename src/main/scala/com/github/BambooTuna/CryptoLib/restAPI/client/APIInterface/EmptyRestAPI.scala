@@ -3,13 +3,13 @@ package com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface
 import com.github.BambooTuna.CryptoLib.restAPI.model._
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.{HttpMethods, HttpRequest, StatusCodes}
+import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
 import akka.stream.ActorMaterializer
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import io.circe._
 
-case class EmptyRestAPI[I, P, O]() extends RestAPISupport[I, P, O] {
+case class EmptyRestAPI[I <: EmptyEntityRequestJson, P <: EmptyQueryParametersJson, O]() extends RestAPISupport[I, P, O] {
 
   override implicit val httpRequestElement = HttpRequestElement.empty()
   override implicit val apiKey: ApiKey = ApiKey("", "")

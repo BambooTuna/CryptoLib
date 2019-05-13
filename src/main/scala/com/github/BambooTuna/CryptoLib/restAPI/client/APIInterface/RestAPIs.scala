@@ -16,5 +16,6 @@ trait RestAPIs {
   val closeOpenPosition: RestAPISupport[_ <: CloseOpenPositionBody, _ <: CloseOpenPositionQueryParameters, _ <: CloseOpenPositionResponse] = EmptyRestAPI[CloseOpenPositionBody, CloseOpenPositionQueryParameters, CloseOpenPositionResponse]()
   val getMyOrders: RestAPISupport[_ <: GetMyOrdersBody, _ <: GetMyOrdersQueryParameters, _ <: GetMyOrdersResponse] = EmptyRestAPI[GetMyOrdersBody, GetMyOrdersQueryParameters, GetMyOrdersResponse]()
   val getMyPositions: RestAPISupport[_ <: GetMyPositionsBody, _ <: GetMyPositionsQueryParameters, _ <: GetMyPositionsResponse] = EmptyRestAPI[GetMyPositionsBody, GetMyPositionsQueryParameters, GetMyPositionsResponse]()
+  val getExecutions: RestAPISupport[_ <: GetExecutionsBody, _ <: GetExecutionsQueryParameters, _ <: List[GetExecutionsResponse]] = EmptyRestAPI[GetExecutionsBody, GetExecutionsQueryParameters, List[GetExecutionsResponse]]()
 
 }

@@ -1,8 +1,8 @@
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity, QueryParameters}
-
-
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
+import com.github.BambooTuna.CryptoLib.restAPI.client.discord.APIList.WebhookBodyImpl
+import com.github.BambooTuna.CryptoLib.restAPI.client.discord.DiscordRestAPIs
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -14,14 +14,28 @@ object Main extends App {
   implicit val materializer: ActorMaterializer            = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
-  bf()
-  liquid()
+  discord()
+
+  def discord(): Unit = {
+    //https://discordapp.com/api/webhooks/123456789/abcdefg
+    val d = new DiscordRestAPIs(ApiKey("123456789", "abcdefg"))
+    d.webhook.run(
+      entity = Some(
+        Entity(
+          WebhookBodyImpl(
+            username = "test",
+            content = "test mes"
+          )
+        )
+      )
+    ).map(println)
+  }
 
   def bf(): Unit = {
     import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.BitflyerRestAPIs
     import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList._
     import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList.BitflyerEnumDefinition._
-    val b = new BitflyerRestAPIs(ApiKey("key", "secret"))
+    val b = new BitflyerRestAPIs(ApiKey("6NaDdP3kDg7i2ET3vtdihf", "neyr2kqKAiYMm3pFok3AXejebIEn9gt8rUNcUXo73NY="))
     b.simpleOrder.run(
       entity = Some(
         Entity(SimpleOrderBodyImpl(
@@ -33,6 +47,18 @@ object Main extends App {
         ))
       )
     ).map(println)
+
+    b.getExecutions.run(
+      queryParameters = Some(
+        QueryParameters(GetExecutionsQueryParametersImpl(
+          count = 500.toString,
+          after = 414472500.toString
+
+        ))
+      )
+    ).map(v => {
+      v.right.foreach(a => a.foreach(println))
+    })
   }
   def liquid(): Unit = {
     import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPIs
