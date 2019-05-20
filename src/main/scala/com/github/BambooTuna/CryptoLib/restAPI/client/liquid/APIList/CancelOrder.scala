@@ -1,17 +1,16 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class CancelOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CancelOrderBodyImpl, CancelOrderQueryParametersImpl, CancelOrderResponseImpl]
-case class CancelOrderBodyImpl() extends CancelOrderBody
-case class CancelOrderQueryParametersImpl(
+case class CancelOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CancelOrderBody, CancelOrderQueryParameters, CancelOrderResponse]
+case class CancelOrderBody() extends EmptyEntityRequestJson
+case class CancelOrderQueryParameters(
                                            id: String
-                                         ) extends CancelOrderQueryParameters
-case class CancelOrderResponseImpl(
+                                         ) extends EmptyQueryParametersJson
+case class CancelOrderResponse(
                                     id: Long,
                                     order_type: OrderType,
                                     quantity: BigDecimal,
@@ -29,4 +28,4 @@ case class CancelOrderResponseImpl(
                                     product_code: String,
                                     funding_currency: String,
                                     currency_pair_code: String
-                                  ) extends CancelOrderResponse
+                                  ) extends EmptyResponseJson

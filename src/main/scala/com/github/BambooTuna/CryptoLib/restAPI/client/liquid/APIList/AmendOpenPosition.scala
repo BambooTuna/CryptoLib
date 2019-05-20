@@ -1,23 +1,22 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class AmendOpenPositionImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenPositionBodyImpl, AmendOpenPositionQueryParametersImpl, AmendOpenPositionResponseImpl]
+case class AmendOpenPosition(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenPositionBody, AmendOpenPositionQueryParameters, AmendOpenPositionResponse]
 case class AmendOpenPositionRequestData(
                                          stop_loss: BigDecimal,
                                          take_profit: BigDecimal
                                        )
-case class AmendOpenPositionBodyImpl(
+case class AmendOpenPositionBody(
                                       trade: AmendOpenPositionRequestData
-                              ) extends AmendOpenPositionBody
-case class AmendOpenPositionQueryParametersImpl(
+                              ) extends EmptyEntityRequestJson
+case class AmendOpenPositionQueryParameters(
                                                  id: String
-                                               ) extends AmendOpenPositionQueryParameters
-case class AmendOpenPositionResponseImpl(
+                                               ) extends EmptyQueryParametersJson
+case class AmendOpenPositionResponse(
                                           id: Long,
                                           currency_pair_code: String,
                                           status: PositionStatus,
@@ -41,4 +40,4 @@ case class AmendOpenPositionResponseImpl(
                                           created_at: Long,
                                           updated_at: Long,
                                           total_interest: BigDecimal
-                                  ) extends AmendOpenPositionResponse
+                                  ) extends EmptyResponseJson

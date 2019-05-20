@@ -1,20 +1,18 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class GetMyOrdersImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyOrdersBodyImpl, GetMyOrdersQueryParametersImpl, GetMyOrdersResponseImpl]
-case class GetMyOrdersBodyImpl() extends GetMyOrdersBody
-case class GetMyOrdersQueryParametersImpl(
+case class GetMyOrders(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyOrdersBody, GetMyOrdersQueryParameters, GetMyOrdersResponse]
+case class GetMyOrdersBody() extends EmptyEntityRequestJson
+case class GetMyOrdersQueryParameters(
                                            funding_currency: String = "",
                                            product_id: String = "",
                                            status: OrderStatus = OrderStatus.Live,
                                            with_details: String = ""
-                                         ) extends GetMyOrdersQueryParameters
-
+                                         ) extends EmptyQueryParametersJson
 case class MyOrderData(
                         id: Long,
                         order_type: OrderType,
@@ -35,8 +33,8 @@ case class MyOrderData(
                         currency_pair_code: String,
                         order_fee: BigDecimal
                       )
-case class GetMyOrdersResponseImpl(
+case class GetMyOrdersResponse(
                                     models: List[MyOrderData],
                                     current_page: Int,
                                     total_pages: Int
-                                  ) extends GetMyOrdersResponse
+                                  ) extends EmptyResponseJson

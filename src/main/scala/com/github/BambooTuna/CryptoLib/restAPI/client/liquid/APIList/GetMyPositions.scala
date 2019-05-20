@@ -1,18 +1,16 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class GetMyPositionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBodyImpl, GetMyPositionsQueryParametersImpl, GetMyPositionsResponseImpl]
-case class GetMyPositionsBodyImpl() extends GetMyPositionsBody
-case class GetMyPositionsQueryParametersImpl(
+case class GetMyPositions(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBody, GetMyPositionsQueryParameters, GetMyPositionsResponse]
+case class GetMyPositionsBody() extends EmptyEntityRequestJson
+case class GetMyPositionsQueryParameters(
                                               funding_currency: String = "",
                                               status: PositionStatus = PositionStatus.Empty
-                                            ) extends GetMyPositionsQueryParameters
-
+                                            ) extends EmptyQueryParametersJson
 case class MyPositionData(
                            id: Long,
                            currency_pair_code: String,
@@ -38,8 +36,8 @@ case class MyPositionData(
                            updated_at: Long,
                            total_interest: BigDecimal
                          )
-case class GetMyPositionsResponseImpl(
+case class GetMyPositionsResponse(
                                        models: List[MyPositionData],
                                        current_page: Int,
                                        total_pages: Int
-                                  ) extends GetMyPositionsResponse
+                                  ) extends EmptyResponseJson

@@ -1,23 +1,22 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class AmendOpenOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenOrderBodyImpl, AmendOpenOrderQueryParametersImpl, AmendOpenOrderResponseImpl]
+case class AmendOpenOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenOrderBody, AmendOpenOrderQueryParameters, AmendOpenOrderResponse]
 case class AmendOpenOrderRequestData(
                                       quantity: BigDecimal,
                                       price: BigDecimal
                                     )
-case class AmendOpenOrderBodyImpl(
+case class AmendOpenOrderBody(
                                    order: AmendOpenOrderRequestData
-                              ) extends AmendOpenOrderBody
-case class AmendOpenOrderQueryParametersImpl(
+                              ) extends EmptyEntityRequestJson
+case class AmendOpenOrderQueryParameters(
                                               id: String
-                                            ) extends AmendOpenOrderQueryParameters
-case class AmendOpenOrderResponseImpl(
+                                            ) extends EmptyQueryParametersJson
+case class AmendOpenOrderResponse(
                                        id: Long,
                                        order_type: OrderType,
                                        quantity: BigDecimal,
@@ -35,4 +34,4 @@ case class AmendOpenOrderResponseImpl(
                                        product_code: String,
                                        funding_currency: String,
                                        currency_pair_code: String
-                                  ) extends AmendOpenOrderResponse
+                                  ) extends EmptyResponseJson
