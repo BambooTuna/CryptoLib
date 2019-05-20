@@ -1,13 +1,12 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class SimpleOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[SimpleOrderBodyImpl, SimpleOrderQueryParametersImpl, SimpleOrderResponseImpl]
-case class SimpleOrderBodyImpl(
+case class SimpleOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[SimpleOrderBody, SimpleOrderQueryParameters, SimpleOrderResponse]
+case class SimpleOrderBody(
                                 order_type: OrderType,
                                 product_id: Int,
                                 side: Side,
@@ -16,9 +15,9 @@ case class SimpleOrderBodyImpl(
                                 price_range: BigDecimal = 0,
                                 leverage_level: Int = 25,
                                 order_direction: OrderDirection = OrderDirection.Netout
-                              ) extends SimpleOrderBody
-case class SimpleOrderQueryParametersImpl() extends SimpleOrderQueryParameters
-case class SimpleOrderResponseImpl(
+                              ) extends EmptyEntityRequestJson
+case class SimpleOrderQueryParameters() extends EmptyQueryParametersJson
+case class SimpleOrderResponse(
                                     id: Long,
                                     order_type: OrderType,
                                     quantity: BigDecimal,
@@ -37,4 +36,4 @@ case class SimpleOrderResponseImpl(
                                     funding_currency: String,
                                     currency_pair_code: String,
                                     order_fee: BigDecimal
-                                  ) extends SimpleOrderResponse
+                                  ) extends EmptyResponseJson

@@ -1,22 +1,21 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class ChangeLeverageLevelImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[ChangeLeverageLevelBodyImpl, ChangeLeverageLevelQueryParametersImpl, ChangeLeverageLevelResponseImpl]
+case class ChangeLeverageLevel(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[ChangeLeverageLevelBody, ChangeLeverageLevelQueryParameters, ChangeLeverageLevelResponse]
 case class LeverageLevel(
                           leverage_level: Int
                         )
-case class ChangeLeverageLevelBodyImpl(
+case class ChangeLeverageLevelBody(
                                         trading_account: LeverageLevel
-                              ) extends ChangeLeverageLevelBody
-case class ChangeLeverageLevelQueryParametersImpl(
+                              ) extends EmptyEntityRequestJson
+case class ChangeLeverageLevelQueryParameters(
                                                    id: String
-                                                 ) extends ChangeLeverageLevelQueryParameters
-case class ChangeLeverageLevelResponseImpl(
+                                                 ) extends EmptyQueryParametersJson
+case class ChangeLeverageLevelResponse(
                                             id: Long,
                                             leverage_level: Int,
                                             max_leverage_level: Int,
@@ -36,4 +35,4 @@ case class ChangeLeverageLevelResponseImpl(
                                             margin_percent: BigDecimal,
                                             product_id: Int,
                                             funding_currency: String
-                                  ) extends ChangeLeverageLevelResponse
+                                  ) extends EmptyResponseJson

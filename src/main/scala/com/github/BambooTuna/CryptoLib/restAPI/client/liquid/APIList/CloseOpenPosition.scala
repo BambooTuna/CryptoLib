@@ -1,17 +1,16 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class CloseOpenPositionImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CloseOpenPositionBodyImpl, CloseOpenPositionQueryParametersImpl, CloseOpenPositionResponseImpl]
-case class CloseOpenPositionBodyImpl() extends CloseOpenPositionBody
-case class CloseOpenPositionQueryParametersImpl(
+case class CloseOpenPosition(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CloseOpenPositionBody, CloseOpenPositionQueryParameters, CloseOpenPositionResponse]
+case class CloseOpenPositionBody() extends EmptyEntityRequestJson
+case class CloseOpenPositionQueryParameters(
                                                  id: String
-                                               ) extends CloseOpenPositionQueryParameters
-case class CloseOpenPositionResponseImpl(
+                                               ) extends EmptyQueryParametersJson
+case class CloseOpenPositionResponse(
                                           id: Long,
                                           currency_pair_code: String,
                                           status: PositionStatus,
@@ -35,4 +34,4 @@ case class CloseOpenPositionResponseImpl(
                                           created_at: Long,
                                           updated_at: Long,
                                           total_interest: BigDecimal
-                                  ) extends CloseOpenPositionResponse
+                                  ) extends EmptyResponseJson
