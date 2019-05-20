@@ -3,17 +3,16 @@ package com.github.BambooTuna.CryptoLib.restAPI.client.liquid
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Endpoint, Path}
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
 import akka.http.scaladsl.model.HttpMethods
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.RestAPIs
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList._
 
-class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
+class LiquidRestAPIs(val apiKey: ApiKey) {
 
   val endpoint = Endpoint(
     scheme = "https",
     host = "api.liquid.com"
   )
 
-  override val simpleOrder = SimpleOrderImpl(
+  val simpleOrder = SimpleOrderImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -22,7 +21,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val cancelOrder = CancelOrderImpl(
+  val cancelOrder = CancelOrderImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -31,7 +30,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val getMyOrders = GetMyOrdersImpl(
+  val getMyOrders = GetMyOrdersImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -40,7 +39,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val amendOpenOrder = AmendOpenOrderImpl(
+  val amendOpenOrder = AmendOpenOrderImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -49,7 +48,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val getMyPositions = GetMyPositionsImpl(
+  val getMyPositions = GetMyPositionsImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -58,7 +57,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val amendOpenPosition = AmendOpenPositionImpl(
+  val amendOpenPosition = AmendOpenPositionImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -67,7 +66,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val closeOpenPosition = CloseOpenPositionImpl(
+  val closeOpenPosition = CloseOpenPositionImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -76,7 +75,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val closeAllOpenPositions = CloseAllOpenPositionsImpl(
+  val closeAllOpenPositions = CloseAllOpenPositionsImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -85,7 +84,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) extends RestAPIs {
     )
   )
 
-  override val changeLeverageLevel = ChangeLeverageLevelImpl(
+  val changeLeverageLevel = ChangeLeverageLevelImpl(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
