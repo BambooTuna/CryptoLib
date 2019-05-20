@@ -27,8 +27,7 @@ trait BitflyerRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
     Map(
       "ACCESS-KEY" -> apiKey.key,
       "ACCESS-TIMESTAMP" -> timestamp,
-      "ACCESS-SIGN" -> HMACSHA256(timestamp + createSign, apiKey.secret),
-      "Content-Type" -> "application/json"
+      "ACCESS-SIGN" -> HMACSHA256(timestamp + createSign, apiKey.secret)
     )
   }
 

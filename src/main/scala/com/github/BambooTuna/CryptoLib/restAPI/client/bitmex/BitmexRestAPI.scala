@@ -24,9 +24,7 @@ trait BitmexRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
   override def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
     val timestamp = System.currentTimeMillis.toString
-    Map(
-      "Content-Type" -> "application/json"
-    )
+    Map.empty
   }
 
   override def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String = {

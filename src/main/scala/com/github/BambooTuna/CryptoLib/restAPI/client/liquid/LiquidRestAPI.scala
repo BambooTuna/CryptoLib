@@ -28,8 +28,7 @@ trait LiquidRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
   override def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
     Map(
       "X-Quoine-API-Version" -> "2",
-      "X-Quoine-Auth" -> createSign,
-      "Content-Type" -> "application/json"
+      "X-Quoine-Auth" -> createSign
     )
   }
 
