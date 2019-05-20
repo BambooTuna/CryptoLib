@@ -1,18 +1,16 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
 case class GetMyPositionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBodyImpl, GetMyPositionsQueryParametersImpl, GetMyPositionsResponseImpl]
-case class GetMyPositionsBodyImpl() extends GetMyPositionsBody
+case class GetMyPositionsBodyImpl() extends EmptyEntityRequestJson
 case class GetMyPositionsQueryParametersImpl(
                                               funding_currency: String = "",
                                               status: PositionStatus = PositionStatus.Empty
-                                            ) extends GetMyPositionsQueryParameters
-
+                                            ) extends EmptyQueryParametersJson
 case class MyPositionData(
                            id: Long,
                            currency_pair_code: String,
@@ -42,4 +40,4 @@ case class GetMyPositionsResponseImpl(
                                        models: List[MyPositionData],
                                        current_page: Int,
                                        total_pages: Int
-                                  ) extends GetMyPositionsResponse
+                                  ) extends EmptyResponseJson

@@ -1,10 +1,9 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
 case class AmendOpenOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenOrderBodyImpl, AmendOpenOrderQueryParametersImpl, AmendOpenOrderResponseImpl]
 case class AmendOpenOrderRequestData(
@@ -13,10 +12,10 @@ case class AmendOpenOrderRequestData(
                                     )
 case class AmendOpenOrderBodyImpl(
                                    order: AmendOpenOrderRequestData
-                              ) extends AmendOpenOrderBody
+                              ) extends EmptyEntityRequestJson
 case class AmendOpenOrderQueryParametersImpl(
                                               id: String
-                                            ) extends AmendOpenOrderQueryParameters
+                                            ) extends EmptyQueryParametersJson
 case class AmendOpenOrderResponseImpl(
                                        id: Long,
                                        order_type: OrderType,
@@ -35,4 +34,4 @@ case class AmendOpenOrderResponseImpl(
                                        product_code: String,
                                        funding_currency: String,
                                        currency_pair_code: String
-                                  ) extends AmendOpenOrderResponse
+                                  ) extends EmptyResponseJson

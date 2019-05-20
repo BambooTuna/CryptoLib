@@ -15,6 +15,8 @@ object Main extends App {
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
   discord()
+  bf()
+  liquid()
 
   def discord(): Unit = {
     //https://discordapp.com/api/webhooks/123456789/abcdefg

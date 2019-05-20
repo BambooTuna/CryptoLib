@@ -1,10 +1,9 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList
 
-import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.APIList._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.APIList.LiquidEnumDefinition._
 import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
-import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol.HttpRequestElement
+import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
 case class AmendOpenPositionImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenPositionBodyImpl, AmendOpenPositionQueryParametersImpl, AmendOpenPositionResponseImpl]
 case class AmendOpenPositionRequestData(
@@ -13,10 +12,10 @@ case class AmendOpenPositionRequestData(
                                        )
 case class AmendOpenPositionBodyImpl(
                                       trade: AmendOpenPositionRequestData
-                              ) extends AmendOpenPositionBody
+                              ) extends EmptyEntityRequestJson
 case class AmendOpenPositionQueryParametersImpl(
                                                  id: String
-                                               ) extends AmendOpenPositionQueryParameters
+                                               ) extends EmptyQueryParametersJson
 case class AmendOpenPositionResponseImpl(
                                           id: Long,
                                           currency_pair_code: String,
@@ -41,4 +40,4 @@ case class AmendOpenPositionResponseImpl(
                                           created_at: Long,
                                           updated_at: Long,
                                           total_interest: BigDecimal
-                                  ) extends AmendOpenPositionResponse
+                                  ) extends EmptyResponseJson
