@@ -12,7 +12,7 @@ class DiscordRestAPIs(val apiKey: ApiKey) {
     host = "discordapp.com"
   )
 
-  val webhook = WebhookImpl(
+  val webhook = Webhook(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,

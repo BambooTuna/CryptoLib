@@ -5,18 +5,18 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class AmendOpenOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenOrderBodyImpl, AmendOpenOrderQueryParametersImpl, AmendOpenOrderResponseImpl]
+case class AmendOpenOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenOrderBody, AmendOpenOrderQueryParameters, AmendOpenOrderResponse]
 case class AmendOpenOrderRequestData(
                                       quantity: BigDecimal,
                                       price: BigDecimal
                                     )
-case class AmendOpenOrderBodyImpl(
+case class AmendOpenOrderBody(
                                    order: AmendOpenOrderRequestData
                               ) extends EmptyEntityRequestJson
-case class AmendOpenOrderQueryParametersImpl(
+case class AmendOpenOrderQueryParameters(
                                               id: String
                                             ) extends EmptyQueryParametersJson
-case class AmendOpenOrderResponseImpl(
+case class AmendOpenOrderResponse(
                                        id: Long,
                                        order_type: OrderType,
                                        quantity: BigDecimal,

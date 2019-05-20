@@ -12,7 +12,7 @@ class BitflyerRestAPIs(val apiKey: ApiKey) {
     host = "api.bitflyer.com"
   )
 
-  val simpleOrder = SimpleOrderImpl(
+  val simpleOrder = SimpleOrder(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -21,7 +21,7 @@ class BitflyerRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val getExecutions = GetExecutionsImpl(
+  val getExecutions = GetExecutions(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,

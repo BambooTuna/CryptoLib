@@ -12,7 +12,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     host = "api.liquid.com"
   )
 
-  val simpleOrder = SimpleOrderImpl(
+  val simpleOrder = SimpleOrder(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -21,7 +21,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val cancelOrder = CancelOrderImpl(
+  val cancelOrder = CancelOrder(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -30,7 +30,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val getMyOrders = GetMyOrdersImpl(
+  val getMyOrders = GetMyOrders(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -39,7 +39,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val amendOpenOrder = AmendOpenOrderImpl(
+  val amendOpenOrder = AmendOpenOrder(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -48,7 +48,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val getMyPositions = GetMyPositionsImpl(
+  val getMyPositions = GetMyPositions(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -57,7 +57,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val amendOpenPosition = AmendOpenPositionImpl(
+  val amendOpenPosition = AmendOpenPosition(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -66,7 +66,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val closeOpenPosition = CloseOpenPositionImpl(
+  val closeOpenPosition = CloseOpenPosition(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -75,7 +75,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val closeAllOpenPositions = CloseAllOpenPositionsImpl(
+  val closeAllOpenPositions = CloseAllOpenPositions(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,
@@ -84,7 +84,7 @@ class LiquidRestAPIs(val apiKey: ApiKey) {
     )
   )
 
-  val changeLeverageLevel = ChangeLeverageLevelImpl(
+  val changeLeverageLevel = ChangeLeverageLevel(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
       endpoint = endpoint,

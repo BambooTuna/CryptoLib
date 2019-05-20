@@ -5,18 +5,18 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class AmendOpenPositionImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenPositionBodyImpl, AmendOpenPositionQueryParametersImpl, AmendOpenPositionResponseImpl]
+case class AmendOpenPosition(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[AmendOpenPositionBody, AmendOpenPositionQueryParameters, AmendOpenPositionResponse]
 case class AmendOpenPositionRequestData(
                                          stop_loss: BigDecimal,
                                          take_profit: BigDecimal
                                        )
-case class AmendOpenPositionBodyImpl(
+case class AmendOpenPositionBody(
                                       trade: AmendOpenPositionRequestData
                               ) extends EmptyEntityRequestJson
-case class AmendOpenPositionQueryParametersImpl(
+case class AmendOpenPositionQueryParameters(
                                                  id: String
                                                ) extends EmptyQueryParametersJson
-case class AmendOpenPositionResponseImpl(
+case class AmendOpenPositionResponse(
                                           id: Long,
                                           currency_pair_code: String,
                                           status: PositionStatus,

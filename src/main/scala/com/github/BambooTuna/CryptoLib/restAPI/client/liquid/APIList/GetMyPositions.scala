@@ -5,9 +5,9 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class GetMyPositionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBodyImpl, GetMyPositionsQueryParametersImpl, GetMyPositionsResponseImpl]
-case class GetMyPositionsBodyImpl() extends EmptyEntityRequestJson
-case class GetMyPositionsQueryParametersImpl(
+case class GetMyPositions(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyPositionsBody, GetMyPositionsQueryParameters, GetMyPositionsResponse]
+case class GetMyPositionsBody() extends EmptyEntityRequestJson
+case class GetMyPositionsQueryParameters(
                                               funding_currency: String = "",
                                               status: PositionStatus = PositionStatus.Empty
                                             ) extends EmptyQueryParametersJson
@@ -36,7 +36,7 @@ case class MyPositionData(
                            updated_at: Long,
                            total_interest: BigDecimal
                          )
-case class GetMyPositionsResponseImpl(
+case class GetMyPositionsResponse(
                                        models: List[MyPositionData],
                                        current_page: Int,
                                        total_pages: Int

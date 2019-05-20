@@ -5,9 +5,9 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.BitflyerRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class GetExecutionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends BitflyerRestAPI[GetExecutionsBodyImpl, GetExecutionsQueryParametersImpl, List[GetExecutionsResponseImpl]]
-case class GetExecutionsBodyImpl() extends EmptyEntityRequestJson
-case class GetExecutionsQueryParametersImpl(
+case class GetExecutions(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends BitflyerRestAPI[GetExecutionsBody, GetExecutionsQueryParameters, List[GetExecutionsResponse]]
+case class GetExecutionsBody() extends EmptyEntityRequestJson
+case class GetExecutionsQueryParameters(
                                              product_code: String = "FX_BTC_JPY",
                                              count: String = "100",
                                              before: String = "",
@@ -15,7 +15,7 @@ case class GetExecutionsQueryParametersImpl(
                                              child_order_id: String = "",
                                              child_order_acceptance_id: String = ""
                                            ) extends EmptyQueryParametersJson
-case class GetExecutionsResponseImpl(
+case class GetExecutionsResponse(
                                       id: Long,
                                       child_order_id: String,
                                       side: Side,

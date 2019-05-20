@@ -4,10 +4,10 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.discord.DiscordRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class WebhookImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends DiscordRestAPI[WebhookBodyImpl, WebhookQueryParametersImpl, WebhookResponseImpl]
-case class WebhookBodyImpl(
+case class Webhook(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends DiscordRestAPI[WebhookBody, WebhookQueryParameters, WebhookResponse]
+case class WebhookBody(
                             username: String,
                             content: String
                           ) extends EmptyEntityRequestJson
-case class WebhookQueryParametersImpl() extends EmptyQueryParametersJson
-case class WebhookResponseImpl() extends EmptyResponseJson
+case class WebhookQueryParameters() extends EmptyQueryParametersJson
+case class WebhookResponse() extends EmptyResponseJson

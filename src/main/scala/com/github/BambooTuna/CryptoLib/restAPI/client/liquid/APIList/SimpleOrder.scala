@@ -5,8 +5,8 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class SimpleOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[SimpleOrderBodyImpl, SimpleOrderQueryParametersImpl, SimpleOrderResponseImpl]
-case class SimpleOrderBodyImpl(
+case class SimpleOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[SimpleOrderBody, SimpleOrderQueryParameters, SimpleOrderResponse]
+case class SimpleOrderBody(
                                 order_type: OrderType,
                                 product_id: Int,
                                 side: Side,
@@ -16,8 +16,8 @@ case class SimpleOrderBodyImpl(
                                 leverage_level: Int = 25,
                                 order_direction: OrderDirection = OrderDirection.Netout
                               ) extends EmptyEntityRequestJson
-case class SimpleOrderQueryParametersImpl() extends EmptyQueryParametersJson
-case class SimpleOrderResponseImpl(
+case class SimpleOrderQueryParameters() extends EmptyQueryParametersJson
+case class SimpleOrderResponse(
                                     id: Long,
                                     order_type: OrderType,
                                     quantity: BigDecimal,

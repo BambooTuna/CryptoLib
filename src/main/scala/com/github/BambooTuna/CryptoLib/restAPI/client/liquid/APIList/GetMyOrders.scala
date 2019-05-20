@@ -5,9 +5,9 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class GetMyOrdersImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyOrdersBodyImpl, GetMyOrdersQueryParametersImpl, GetMyOrdersResponseImpl]
-case class GetMyOrdersBodyImpl() extends EmptyEntityRequestJson
-case class GetMyOrdersQueryParametersImpl(
+case class GetMyOrders(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[GetMyOrdersBody, GetMyOrdersQueryParameters, GetMyOrdersResponse]
+case class GetMyOrdersBody() extends EmptyEntityRequestJson
+case class GetMyOrdersQueryParameters(
                                            funding_currency: String = "",
                                            product_id: String = "",
                                            status: OrderStatus = OrderStatus.Live,
@@ -33,7 +33,7 @@ case class MyOrderData(
                         currency_pair_code: String,
                         order_fee: BigDecimal
                       )
-case class GetMyOrdersResponseImpl(
+case class GetMyOrdersResponse(
                                     models: List[MyOrderData],
                                     current_page: Int,
                                     total_pages: Int

@@ -5,17 +5,17 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class ChangeLeverageLevelImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[ChangeLeverageLevelBodyImpl, ChangeLeverageLevelQueryParametersImpl, ChangeLeverageLevelResponseImpl]
+case class ChangeLeverageLevel(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[ChangeLeverageLevelBody, ChangeLeverageLevelQueryParameters, ChangeLeverageLevelResponse]
 case class LeverageLevel(
                           leverage_level: Int
                         )
-case class ChangeLeverageLevelBodyImpl(
+case class ChangeLeverageLevelBody(
                                         trading_account: LeverageLevel
                               ) extends EmptyEntityRequestJson
-case class ChangeLeverageLevelQueryParametersImpl(
+case class ChangeLeverageLevelQueryParameters(
                                                    id: String
                                                  ) extends EmptyQueryParametersJson
-case class ChangeLeverageLevelResponseImpl(
+case class ChangeLeverageLevelResponse(
                                             id: Long,
                                             leverage_level: Int,
                                             max_leverage_level: Int,

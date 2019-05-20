@@ -5,12 +5,12 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class CancelOrderImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CancelOrderBodyImpl, CancelOrderQueryParametersImpl, CancelOrderResponseImpl]
-case class CancelOrderBodyImpl() extends EmptyEntityRequestJson
-case class CancelOrderQueryParametersImpl(
+case class CancelOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CancelOrderBody, CancelOrderQueryParameters, CancelOrderResponse]
+case class CancelOrderBody() extends EmptyEntityRequestJson
+case class CancelOrderQueryParameters(
                                            id: String
                                          ) extends EmptyQueryParametersJson
-case class CancelOrderResponseImpl(
+case class CancelOrderResponse(
                                     id: Long,
                                     order_type: OrderType,
                                     quantity: BigDecimal,

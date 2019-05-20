@@ -1,7 +1,7 @@
 import com.github.BambooTuna.CryptoLib.restAPI.model.{ApiKey, Entity, QueryParameters}
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import com.github.BambooTuna.CryptoLib.restAPI.client.discord.APIList.WebhookBodyImpl
+import com.github.BambooTuna.CryptoLib.restAPI.client.discord.APIList.WebhookBody
 import com.github.BambooTuna.CryptoLib.restAPI.client.discord.DiscordRestAPIs
 
 import scala.concurrent.ExecutionContextExecutor
@@ -24,7 +24,7 @@ object Main extends App {
     d.webhook.run(
       entity = Some(
         Entity(
-          WebhookBodyImpl(
+          WebhookBody(
             username = "test",
             content = "test mes"
           )
@@ -40,7 +40,7 @@ object Main extends App {
     val b = new BitflyerRestAPIs(ApiKey("6NaDdP3kDg7i2ET3vtdihf", "neyr2kqKAiYMm3pFok3AXejebIEn9gt8rUNcUXo73NY="))
     b.simpleOrder.run(
       entity = Some(
-        Entity(SimpleOrderBodyImpl(
+        Entity(SimpleOrderBody(
           product_code = "FX_BTC_JPY",
           child_order_type = OrderType.Limit,
           side = Side.Buy,
@@ -52,7 +52,7 @@ object Main extends App {
 
     b.getExecutions.run(
       queryParameters = Some(
-        QueryParameters(GetExecutionsQueryParametersImpl(
+        QueryParameters(GetExecutionsQueryParameters(
           count = 500.toString,
           after = 414472500.toString
 
@@ -69,7 +69,7 @@ object Main extends App {
 
     val i = new LiquidRestAPIs(ApiKey("key", "secret"))
 
-    val orderData = SimpleOrderBodyImpl(
+    val orderData = SimpleOrderBody(
       order_type = OrderType.Limit,
       product_id = 5,//BTC　レバ取引
       side = Side.Buy,
@@ -85,28 +85,28 @@ object Main extends App {
       )
       amend <- i.amendOpenOrder.run(
         entity = Some(
-          Entity(AmendOpenOrderBodyImpl(AmendOpenOrderRequestData(
+          Entity(AmendOpenOrderBody(AmendOpenOrderRequestData(
             quantity = 0.02,
             price = 488999
           )))
         ),
         queryParameters = Some(
-          QueryParameters(AmendOpenOrderQueryParametersImpl(order.map(_.id.toString).getOrElse("1234567890")))
+          QueryParameters(AmendOpenOrderQueryParameters(order.map(_.id.toString).getOrElse("1234567890")))
         )
       )
       leverage <- i.changeLeverageLevel.run(
         entity = Some(
-          Entity(ChangeLeverageLevelBodyImpl(LeverageLevel(
+          Entity(ChangeLeverageLevelBody(LeverageLevel(
             leverage_level = 10
           )))
         ),
         queryParameters = Some(
-          QueryParameters(ChangeLeverageLevelQueryParametersImpl("1234567890"))
+          QueryParameters(ChangeLeverageLevelQueryParameters("1234567890"))
         )
       )
       getOrder <- i.getMyOrders.run(
         queryParameters = Some(
-          QueryParameters(GetMyOrdersQueryParametersImpl(
+          QueryParameters(GetMyOrdersQueryParameters(
             product_id = "5",
             status = OrderStatus.Live,
             with_details = "1"
@@ -115,19 +115,19 @@ object Main extends App {
       )
       cancel <- i.cancelOrder.run(
         queryParameters = Some(
-          QueryParameters(CancelOrderQueryParametersImpl(order.map(_.id.toString).getOrElse("1234567890")))
+          QueryParameters(CancelOrderQueryParameters(order.map(_.id.toString).getOrElse("1234567890")))
         )
       )
       position <- i.getMyPositions.run(
         queryParameters = Some(
-          QueryParameters(GetMyPositionsQueryParametersImpl(
+          QueryParameters(GetMyPositionsQueryParameters(
             status = PositionStatus.Open
           ))
         )
       )
       closeAll <- i.closeAllOpenPositions.run(
         queryParameters = Some(
-          QueryParameters(CloseAllOpenPositionsQueryParametersImpl(
+          QueryParameters(CloseAllOpenPositionsQueryParameters(
             side = Side.Buy
           ))
         )

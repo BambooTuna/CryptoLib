@@ -5,12 +5,12 @@ import com.github.BambooTuna.CryptoLib.restAPI.client.liquid.LiquidRestAPI
 import com.github.BambooTuna.CryptoLib.restAPI.model.ApiKey
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
-case class CloseAllOpenPositionsImpl(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CloseAllOpenPositionsBodyImpl, CloseAllOpenPositionsQueryParametersImpl, CloseAllOpenPositionsResponseImpl]
-case class CloseAllOpenPositionsBodyImpl() extends EmptyEntityRequestJson
-case class CloseAllOpenPositionsQueryParametersImpl(
+case class CloseAllOpenPositions(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends LiquidRestAPI[CloseAllOpenPositionsBody, CloseAllOpenPositionsQueryParameters, CloseAllOpenPositionsResponse]
+case class CloseAllOpenPositionsBody() extends EmptyEntityRequestJson
+case class CloseAllOpenPositionsQueryParameters(
                                                      side: Side
                                                    ) extends EmptyQueryParametersJson
-case class CloseAllOpenPositionsResponseImpl(
+case class CloseAllOpenPositionsResponse(
                                               id: Long,
                                               currency_pair_code: String,
                                               status: PositionStatus,
