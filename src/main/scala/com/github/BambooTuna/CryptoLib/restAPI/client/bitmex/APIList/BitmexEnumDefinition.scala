@@ -32,4 +32,18 @@ object BitmexEnumDefinition {
     val values = findValues
   }
 
+  sealed abstract class Symbol(val value: String) extends StringEnumEntry
+  case object Symbol extends StringEnum[Symbol] with StringCirceEnum[Symbol] {
+    case object XBTUSD extends Symbol("XBTUSD")
+    case object ADAM19 extends Symbol("ADAM19")
+    case object BCHM19 extends Symbol("BCHM19")
+    case object EOSM19 extends Symbol("EOSM19")
+    case object ETHUSD extends Symbol("ETHUSD")
+    case object LTCM19 extends Symbol("LTCM19")
+    case object TRXM19 extends Symbol("TRXM19")
+    case object XBTM19 extends Symbol("XBTM19")
+
+    val values = findValues
+  }
+
 }
