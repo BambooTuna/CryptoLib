@@ -25,10 +25,11 @@ object BitflyerEnumDefinition {
   sealed abstract class OrderStatus(val value: String) extends StringEnumEntry
   case object OrderStatus extends StringEnum[OrderStatus] with StringCirceEnum[OrderStatus] {
 
-    case object Live  extends OrderStatus("live")
-    case object Filled  extends OrderStatus("filled")
-    case object PartiallyFilled  extends OrderStatus("partially_filled")
-    case object Cancelled extends OrderStatus("cancelled")
+    case object ACTIVE  extends OrderStatus("ACTIVE")
+    case object COMPLETED  extends OrderStatus("COMPLETED")
+    case object CANCELED  extends OrderStatus("CANCELED")
+    case object EXPIRED extends OrderStatus("EXPIRED")
+    case object REJECTED extends OrderStatus("REJECTED")
     case object Empty extends OrderStatus("")
 
     val values = findValues
