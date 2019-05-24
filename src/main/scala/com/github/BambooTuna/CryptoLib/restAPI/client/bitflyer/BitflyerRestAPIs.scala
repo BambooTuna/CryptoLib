@@ -21,6 +21,51 @@ class BitflyerRestAPIs(val apiKey: ApiKey) {
     )
   )
 
+  val cancelOrder = CancelOrder(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.POST,
+      path = Path("/v1/me/cancelparentorder")
+    )
+  )
+
+  val cancelAllOrder = CancelAllOrder(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.POST,
+      path = Path("/v1/me/cancelallchildorders")
+    )
+  )
+
+  val getMyAsset = GetMyAsset(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/v1/me/getbalance")
+    )
+  )
+
+  val getMyOrders = GetMyOrders(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/v1/me/getchildorders")
+    )
+  )
+
+  val getMyPositions = GetMyPositions(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/v1/me/getpositions")
+    )
+  )
+
   val getExecutions = GetExecutions(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
