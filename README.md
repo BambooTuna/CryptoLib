@@ -11,6 +11,6 @@ See Sample
 ```
 resolvers += "Maven Repo on github" at "https://BambooTuna.github.io/CryptoLib",
       libraryDependencies ++= Seq(
-        "com.github.BambooTuna" %% "cryptolib" % "2.0.4-SNAPSHOT"
+        "com.github.BambooTuna" %% "cryptolib" % "2.0.5-SNAPSHOT"
       )
 ```
