@@ -11,8 +11,8 @@ case class GetCircuitBreakInfoQueryParameters(
                                              ) extends EmptyQueryParametersJson
 
 case class CircuitBreakInfoData(
-                                 upper_limit: Long,
-                                 lower_limit: Long
+                                 upper_limit: BigDecimal,
+                                 lower_limit: BigDecimal
                                )
 case class GetCircuitBreakInfoResponse(
                                 data: CircuitBreakInfoData
