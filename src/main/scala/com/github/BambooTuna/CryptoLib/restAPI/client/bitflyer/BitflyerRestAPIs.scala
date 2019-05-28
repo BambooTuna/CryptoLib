@@ -74,4 +74,13 @@ class BitflyerRestAPIs(val apiKey: ApiKey) {
       path = Path("/v1/me/getexecutions")
     )
   )
+
+  val getCircuitBreakInfo = GetCircuitBreakInfo(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/api/trade/getCircuitBreakInfo")
+    )
+  )
 }
