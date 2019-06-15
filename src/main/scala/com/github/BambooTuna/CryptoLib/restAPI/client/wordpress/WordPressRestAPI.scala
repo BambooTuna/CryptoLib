@@ -1,6 +1,6 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.wordpress
 
-import java.io.{BufferedInputStream, File, InputStream}
+import java.io._
 import java.net.URL
 
 import akka.NotUsed
@@ -20,6 +20,7 @@ import io.circe.generic.auto._
 import wvlet.log.io.IOUtil
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.io.BufferedSource
 
 trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
@@ -36,20 +37,19 @@ trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
   def uploadMedia(entity: Entity[MediaPostingBody], queryParameters: Option[QueryParameters[P]] = None)(implicit encodeP: Encoder[P], decoderO: Decoder[O], system: ActorSystem, materializer: ActorMaterializer, executionContext: ExecutionContextExecutor): Future[Either[ErrorResponseJson, O]] = {
     implicit val entityString = entity.convertToString
     implicit val queryParametersMap = queryParameters.map(_.getMap).getOrElse(Map.empty)
+
+    //WordPressで「セキュリティ上の理由によりこのファイル形式は許可されていません。」と出るため 許可されている形式（画像）の.png を追加している。
+    //.jpgをDLしようとした場合も特に問題はおこらない。（.png ではなく .jpgでDLされる）
     val request = getHttpRequest(Header(createHeaderMap ++
       Map(
-        "Content-Disposition" -> s"""attachment; filename=${entity.requestJson.fileName};""",
+        "Content-Disposition" -> s"""attachment; filename=${entity.requestJson.fileName}.png;""",
       )
-    ))//.withEntity(createFileUploadEntity(new File(entity.requestJson.filePath)))
+    ))
+
     for {
       tmp <- Http().singleRequest(HttpRequest(uri = entity.requestJson.filePath)).map(_.entity.dataBytes)
       result <- doRequest(request.withEntity(HttpEntity(ContentTypes.`application/octet-stream`, tmp).withSizeLimit(1024 * 1024 * 10)))
     } yield result
-    //doRequest(request)
-  }
-
-  def createFileUploadEntity(file: File): MessageEntity = {
-    HttpEntity(ContentTypes.`application/octet-stream`, FileIO.fromPath(file.toPath)).withSizeLimit(1024 * 1024 * 10)// 10M
   }
 
   override def createHeaderMap(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): Map[String, String] = {
