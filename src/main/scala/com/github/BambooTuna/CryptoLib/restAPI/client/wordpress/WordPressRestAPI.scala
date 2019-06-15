@@ -1,26 +1,22 @@
 package com.github.BambooTuna.CryptoLib.restAPI.client.wordpress
 
-import java.io._
-import java.net.URL
-
-import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.{ActorMaterializer, IOResult, scaladsl}
-import akka.stream.scaladsl.{FileIO, Source}
-import akka.util.ByteString
+import akka.stream.ActorMaterializer
 import com.github.BambooTuna.CryptoLib.restAPI.client.APIInterface.RestAPISupport
 import com.github.BambooTuna.CryptoLib.restAPI.client.wordpress.APIList.MediaPostingBody
 import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 import com.github.BambooTuna.CryptoLib.restAPI.model._
+
+import java.util.Base64
+import java.nio.charset.StandardCharsets
+
 import io.circe._
 import io.circe.generic.auto._
-import wvlet.log.io.IOUtil
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
-import scala.io.BufferedSource
 
 trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
@@ -59,8 +55,6 @@ trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
   }
 
   override def createSign(implicit apiKey: ApiKey, entityString: String, queryParametersMap: Map[String, String]): String = {
-    import java.util.Base64
-    import java.nio.charset.StandardCharsets
     Base64.getEncoder.encodeToString(s"${apiKey.key}:${apiKey.secret}".getBytes(StandardCharsets.UTF_8))
   }
 
