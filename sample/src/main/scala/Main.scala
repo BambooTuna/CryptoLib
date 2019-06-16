@@ -3,6 +3,9 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.github.BambooTuna.CryptoLib.restAPI.client.discord.APIList.WebhookBody
 import com.github.BambooTuna.CryptoLib.restAPI.client.discord.DiscordRestAPIs
+import com.github.BambooTuna.CryptoLib.restAPI.client.wordpress.APIList.GetArticlesBody
+import com.github.BambooTuna.CryptoLib.restAPI.client.wordpress.APIList.WordPressEnumDefinition.PostingStatus
+import com.github.BambooTuna.CryptoLib.restAPI.client.wordpress.WordPressRestAPIs
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -14,9 +17,11 @@ object Main extends App {
   implicit val materializer: ActorMaterializer            = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
-  discord()
-  bf()
-  liquid()
+//  discord()
+//  bf()
+//  liquid()
+
+  wp()
 
   def discord(): Unit = {
     //https://discordapp.com/api/webhooks/123456789/abcdefg
@@ -141,5 +146,19 @@ object Main extends App {
       position.fold(println, println)
       closeAll.fold(println, println)
     }
+  }
+
+  def wp() = {
+    val i = new WordPressRestAPIs(ApiKey.empty)("bambootuna.com")
+    i.getArticles.run(
+      entity = Some(
+        Entity(GetArticlesBody(
+          search = "",
+          status = PostingStatus.Draft,
+          per_page = 100L
+        ))
+      )
+    ).onComplete(println)
+
   }
 }
