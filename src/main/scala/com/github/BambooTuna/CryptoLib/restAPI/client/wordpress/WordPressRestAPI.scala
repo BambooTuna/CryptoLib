@@ -63,6 +63,7 @@ trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
       httpResponse <- Http().singleRequest(httpRequest)
       bodyString <- Unmarshal(httpResponse.entity).to[String]
       r <- httpResponse.status match {
+        case StatusCodes.OK => parser.decode[O](bodyString).fold(_ => Future.successful(Left(ErrorResponseJson(StatusCodes.OK, bodyString))), o => Future.successful(Right(o)))
         case StatusCodes.Created => parser.decode[O](bodyString).fold(_ => Future.successful(Left(ErrorResponseJson(StatusCodes.OK, bodyString))), o => Future.successful(Right(o)))
         case s => Future.successful(Left(ErrorResponseJson(s, bodyString)))
       }
