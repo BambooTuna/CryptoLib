@@ -21,6 +21,15 @@ class WordPressRestAPIs(val apiKey: ApiKey)(val host: String) {
     )
   )
 
+  val getArticles = GetArticles(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/wp-json/wp/v2/posts")
+    )
+  )
+
   val mediaPosting = MediaPosting(
     apiKey = apiKey,
     httpRequestElement = HttpRequestElement(
