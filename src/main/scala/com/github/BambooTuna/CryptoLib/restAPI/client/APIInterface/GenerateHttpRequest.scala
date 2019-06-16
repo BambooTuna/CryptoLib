@@ -37,7 +37,7 @@ trait GenerateHttpRequest[I, P, O] {
     header.headers.toList.map(h => RawHeader(h._1, h._2))
   }
 
-  private def createEntity(entityString: String): RequestEntity = {
+  protected def createEntity(entityString: String): RequestEntity = {
     HttpEntity(ContentTypes.`application/json`, entityString)
   }
 
