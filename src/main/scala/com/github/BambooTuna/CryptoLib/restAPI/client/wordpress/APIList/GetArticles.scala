@@ -7,7 +7,9 @@ import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
 case class GetArticles(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends WordPressRestAPI[GetArticlesBody, GetArticlesQueryParameters, List[GetArticlesResponse]]
 
-case class GetArticlesBody() extends EmptyEntityRequestJson
+case class GetArticlesBody(
+                          status: PostingStatus
+                          ) extends EmptyEntityRequestJson
 
 case class GetArticlesQueryParameters() extends EmptyQueryParametersJson
 
