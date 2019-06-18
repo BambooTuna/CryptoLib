@@ -39,4 +39,13 @@ class WordPressRestAPIs(val apiKey: ApiKey)(val host: String) {
     )
   )
 
+  val getTags = GetTags(
+    apiKey = apiKey,
+    httpRequestElement = HttpRequestElement(
+      endpoint = endpoint,
+      method = HttpMethods.GET,
+      path = Path("/wp-json/wp/v2/tags")
+    )
+  )
+
 }
