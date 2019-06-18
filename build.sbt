@@ -13,6 +13,6 @@ lazy val root = (project in file("."))
   .settings(commonSettings)
   .settings(
     name := "CryptoLib",
-    version := "2.1.11-SNAPSHOT",
+    version := "2.1.12-SNAPSHOT",
     libraryDependencies ++= Seq()
   )
