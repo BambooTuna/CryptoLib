@@ -8,7 +8,9 @@ case class GetTags(apiKey: ApiKey, httpRequestElement: HttpRequestElement) exten
 
 case class GetTagsBody() extends EmptyEntityRequestJson
 
-case class GetTagsQueryParameters() extends EmptyQueryParametersJson
+case class GetTagsQueryParameters(
+                                 search: String
+                                 ) extends EmptyQueryParametersJson
 
 case class GetTagsResponse(
                                 id: Long,
