@@ -44,7 +44,7 @@ trait WordPressRestAPI[I, P, O] extends RestAPISupport[I, P, O] {
 
     for {
       tmp <- Http().singleRequest(HttpRequest(uri = entity.requestJson.filePath)).map(_.entity.dataBytes)
-      result <- doRequest(request.withEntity(HttpEntity(ContentTypes.`application/octet-stream`, tmp).withSizeLimit(1024 * 1024 * 10)))
+      result <- doRequest(request.withEntity(HttpEntity(ContentTypes.`application/octet-stream`, tmp).withoutSizeLimit()))
     } yield result
   }
 
