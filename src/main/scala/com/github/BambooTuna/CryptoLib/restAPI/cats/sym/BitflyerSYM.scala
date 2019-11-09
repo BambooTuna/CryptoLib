@@ -1,7 +1,8 @@
-package com.github.BambooTuna.CryptoLib.restAPI.cats
+package com.github.BambooTuna.CryptoLib.restAPI.cats.sym
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
+import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core.APIResponse
 import com.github.BambooTuna.CryptoLib.restAPI.client.bitflyer.APIList.BitflyerEnumDefinition.{OrderType, Side}
 
 trait BitflyerSYM[F[_]] {
@@ -17,5 +18,5 @@ case class OrderData(
                       minute_to_expire: Long = 43200,
                       time_in_force: String = "GTC"
                     )
-case class OrderId(id: String) extends APIResponse
+case class OrderId(child_order_acceptance_id: String) extends APIResponse
 case class AccountAsset(asset: String)

@@ -23,7 +23,7 @@ trait GenerateHttpRequest[I, P, O] {
       method = httpRequestElement.method,
       uri = createUri(httpRequestElement.endpoint, httpRequestElement.path),
       headers = createRawHeaderList(header),
-      entity = createEntity(entityString)
+      entity = entity(entityString)
     )
   }
 
@@ -37,7 +37,7 @@ trait GenerateHttpRequest[I, P, O] {
     header.headers.toList.map(h => RawHeader(h._1, h._2))
   }
 
-  protected def createEntity(entityString: String): RequestEntity = {
+  protected def entity(entityString: String): RequestEntity = {
     HttpEntity(ContentTypes.`application/json`, entityString)
   }
 
