@@ -12,14 +12,14 @@ case class APIRequestFailed(statusCode: Int, message: String, data: Option[Strin
 
 trait HttpSYM[F[_]] {
 
-  def url(path: String, queryString: Option[String] = None): F[Uri]
+  def url(scheme: String, host: String, path: String, queryString: Option[String] = None): Uri
 
-  def method(method: HttpMethod): F[HttpMethod]
+  def method(method: HttpMethod): HttpMethod
 
-  def header(headers: Map[String, String]): F[List[RawHeader]]
+  def header(headers: Map[String, String]): List[RawHeader]
 
-  def entity[T](entity: T)(f: T => String): F[RequestEntity]
+  def entity[T](entity: T)(f: T => String): RequestEntity
 
-  def runRequest[O <: APIResponse](request: HttpRequest)(implicit decoderO: Decoder[O] ,system: ActorSystem, materializer: Materializer): F[O]
+  def runRequest[O <: APIResponse](implicit decoderO: Decoder[O] ,system: ActorSystem, materializer: Materializer): F[O]
 
 }

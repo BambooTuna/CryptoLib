@@ -8,8 +8,8 @@ import scala.concurrent.ExecutionContext
 
 trait BitflyerHttpSYM[F[_]] {
 
-  def request(path: F[Uri], method: F[HttpMethod], headers: F[List[RawHeader]], entity: F[RequestEntity])(implicit ec: ExecutionContext, materializer: Materializer): F[HttpRequest]
+  def request(url: Uri, method: HttpMethod, headers: List[RawHeader], entity: RequestEntity)(implicit ec: ExecutionContext, materializer: Materializer): F[HttpRequest]
 
-  def HMACSHA256(text: String, secret: String): F[String]
+  def HMACSHA256(text: String, secret: String): String
 
 }

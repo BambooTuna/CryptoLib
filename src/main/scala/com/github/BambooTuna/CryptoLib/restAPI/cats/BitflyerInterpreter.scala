@@ -3,6 +3,8 @@ package com.github.BambooTuna.CryptoLib.restAPI.cats
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpMethods
 import akka.stream.Materializer
+import cats.data.{EitherT, Kleisli, Reader}
+import cats.data.Reader._
 import com.github.BambooTuna.CryptoLib.restAPI.cats.ExceptionHandleProtocol.HttpSYMInternalException
 import com.github.BambooTuna.CryptoLib.restAPI.cats.SettingProtocol.APISetting
 import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core._
@@ -16,18 +18,23 @@ import scala.concurrent.ExecutionContext
 object BitflyerInterpreter {
   import com.github.BambooTuna.CryptoLib.restAPI.cats.HttpInterpreter._
   import com.github.BambooTuna.CryptoLib.restAPI.cats.BitflyerHttpInterpreter._
-  type Bitflyer[A] = Reader[APISetting, Task, HttpSYMInternalException, A]
+
+  type ET[O] = EitherT[Task, HttpSYMInternalException, O]
+  type BitflyerA[O] = Kleisli[ET, APISetting, O]
+  type Bitflyer[A] = Reader[APISetting, BitflyerA[A]]
 
   implicit val BitflyerSYMInterpreter = new BitflyerSYM[Bitflyer] {
     def order(orderData: OrderData)(implicit system: ActorSystem, materializer: Materializer): Bitflyer[OrderId] =
       {
         implicit val ex: ExecutionContext = system.dispatcher
-        request(
-          url("/v1/me/sendchildorder", Some("aaa=aaa")),
-          method(HttpMethods.POST),
-          header(Map.empty),
-          entity[OrderData](orderData)(_.asJson.noSpaces)
-        ) ~> runRequest[OrderId]
+        Reader { setting: APISetting =>
+          (request(
+            url("", "", "/v1/me/sendchildorder", Some("aaa=aaa")),
+            method(HttpMethods.POST),
+            header(Map.empty),
+            entity[OrderData](orderData)(_.asJson.noSpaces)
+          ) andThen runRequest[OrderId])
+        }
       }
 
   }
