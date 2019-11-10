@@ -6,13 +6,9 @@ import akka.http.scaladsl.model.{HttpMethod, HttpRequest, RequestEntity, Uri}
 import akka.stream.Materializer
 import io.circe.Decoder
 
-
-trait APIResponse
-case class APIRequestFailed(statusCode: Int, message: String, data: Option[String] = None) extends APIResponse
-
 trait HttpSYM[F[_]] {
 
-  def url(path: String, queryString: Option[String] = None): F[Uri]
+  def url(path: String, queryParameters: Map[String, String] = Map.empty): F[Uri]
 
   def method(method: HttpMethod): F[HttpMethod]
 
@@ -20,6 +16,6 @@ trait HttpSYM[F[_]] {
 
   def entity[T](entity: T)(f: T => String): F[RequestEntity]
 
-  def runRequest[O <: APIResponse](request: HttpRequest)(implicit decoderO: Decoder[O] ,system: ActorSystem, materializer: Materializer): F[O]
+  def runRequest[O](request: HttpRequest)(implicit decoderO: Decoder[O] ,system: ActorSystem, materializer: Materializer): F[O]
 
 }

@@ -1,23 +1,24 @@
-package com.github.BambooTuna.CryptoLib.restAPI.cats
+package com.github.BambooTuna.CryptoLib.restAPI.cats.interpreter.bitflyer
 
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.model.{HttpMethod, HttpRequest, RequestEntity, Uri}
 import akka.stream.Materializer
 import cats.data.EitherT
-import com.github.BambooTuna.CryptoLib.restAPI.cats.ExceptionHandleProtocol._
-import com.github.BambooTuna.CryptoLib.restAPI.cats.SettingProtocol.APISetting
-import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core._
-import com.github.BambooTuna.CryptoLib.restAPI.cats.sym._
+import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.bitflyer.BitflyerHttpSYM
+import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core.ExceptionHandleProtocol.{FetchOriginEntityDataException, HttpSYMInternalException}
+import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core.Reader
+import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core.SettingProtocol.APISetting
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import monix.eval.Task
 
 import scala.concurrent.ExecutionContext
+
 import scala.concurrent.duration._
 
 object BitflyerHttpInterpreter {
+  import com.github.BambooTuna.CryptoLib.restAPI.cats.interpreter.core.HttpInterpreter._
   import com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core.Reader._
-  import com.github.BambooTuna.CryptoLib.restAPI.cats.HttpInterpreter._
   type Bitflyer[A] = Reader[APISetting, Task, HttpSYMInternalException, A]
 
   implicit val BitflyerHttpSYMInterpreter = new BitflyerHttpSYM[Bitflyer] {
@@ -31,7 +32,7 @@ object BitflyerHttpInterpreter {
         e <- entity
         originEntity <- pure(EitherT[Task, HttpSYMInternalException, String](
           Task.fromFuture(
-            e.toStrict(1.seconds).map(_.data.utf8String)
+            e.toStrict(10.millisecond).map(_.data.utf8String)
           )
             .map(Right(_))
             .onErrorHandle(e => Left(FetchOriginEntityDataException(e.getMessage)))
@@ -45,9 +46,10 @@ object BitflyerHttpInterpreter {
           "ACCESS-SIGN" -> sign
         ))
       } yield {
-        println(originEntity)
-        println(text)
-        println(authHeader)
+//        println(e)
+//        println(originEntity)
+//        println(text)
+//        println(authHeader)
 
         HttpRequest(
           method = m,

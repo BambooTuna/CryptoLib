@@ -1,4 +1,4 @@
-package com.github.BambooTuna.CryptoLib.restAPI.cats.sym
+package com.github.BambooTuna.CryptoLib.restAPI.cats.sym.bitflyer
 
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.model.{HttpMethod, HttpRequest, RequestEntity, Uri}

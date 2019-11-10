@@ -1,4 +1,4 @@
-package com.github.BambooTuna.CryptoLib.restAPI.cats
+package com.github.BambooTuna.CryptoLib.restAPI.cats.sym.core
 
 import org.slf4j.Logger
 
