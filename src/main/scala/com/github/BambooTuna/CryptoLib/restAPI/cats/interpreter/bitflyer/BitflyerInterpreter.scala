@@ -50,14 +50,8 @@ object BitflyerInterpreter {
   def cancelOrder(request: CancelOrderBody)(implicit system: ActorSystem, materializer: Materializer, T: BitflyerPOSTSYM[Bitflyer]) =
     T.cancelOrder(request)
 
-  def cancelOrder(request: SimpleOrderResponse)(implicit system: ActorSystem, materializer: Materializer, T: BitflyerPOSTSYM[Bitflyer]) =
-    T.cancelOrder(CancelOrderBody(child_order_acceptance_id = request.child_order_acceptance_id))
-
   def cancelAllOrder(request: CancelAllOrderBody)(implicit system: ActorSystem, materializer: Materializer, T: BitflyerPOSTSYM[Bitflyer]) =
     T.cancelAllOrder(request)
-
-  def cancelAllOrder(implicit system: ActorSystem, materializer: Materializer, T: BitflyerPOSTSYM[Bitflyer]) =
-    T.cancelAllOrder(CancelAllOrderBody())
 
   implicit val BitflyerGETSYMInterpreter = new BitflyerGETSYM[Bitflyer] {
 
@@ -94,9 +88,6 @@ object BitflyerInterpreter {
 
   def getMyOrders(request: GetMyOrdersQueryParameters)(implicit system: ActorSystem, materializer: Materializer, T: BitflyerGETSYM[Bitflyer]) =
     T.getMyOrders(request)
-
-  def getMyOrders(implicit system: ActorSystem, materializer: Materializer, T: BitflyerGETSYM[Bitflyer]) =
-    T.getMyOrders(GetMyOrdersQueryParameters())
 
   def getMyPositions(request: GetMyPositionsQueryParameters)(implicit system: ActorSystem, materializer: Materializer, T: BitflyerGETSYM[Bitflyer]) =
     T.getMyPositions(request)

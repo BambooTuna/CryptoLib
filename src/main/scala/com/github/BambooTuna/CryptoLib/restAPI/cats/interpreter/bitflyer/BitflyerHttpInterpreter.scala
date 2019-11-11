@@ -50,7 +50,6 @@ object BitflyerHttpInterpreter {
 //        println(originEntity)
 //        println(text)
 //        println(authHeader)
-
         HttpRequest(
           method = m,
           uri = p,
