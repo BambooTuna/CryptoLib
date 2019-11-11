@@ -7,7 +7,7 @@ import com.github.BambooTuna.CryptoLib.restAPI.model.Protocol._
 
 case class SimpleOrder(apiKey: ApiKey, httpRequestElement: HttpRequestElement) extends BitflyerRestAPI[SimpleOrderBody, SimpleOrderQueryParameters, SimpleOrderResponse]
 case class SimpleOrderBody(
-                                product_code: String,
+                                product_code: String = "FX_BTC_JPY",
                                 child_order_type: OrderType,
                                 side: Side,
                                 price: Long,
